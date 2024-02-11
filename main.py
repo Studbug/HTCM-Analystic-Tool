@@ -47,6 +47,7 @@ def main():
             #Neither HAM got their reds, this is if Covert is alive and ellie is dead
             elif not 'Covertpz' in redBaits[time] and not covertDied and not 'Silas Alder' in redBaits[time] and ellieDied:
                 print(redBaits[time], '(Ellie died, Covert\'s stolen) got the reds at', time/1000, 'seconds.')
+            #Ellie and Covert both dead
             elif ellieDead and covertDead:
                 print(redBaits[time], '(Ellie and Covert both dead) got reds at', time/1000, 'seconds.')
             #Hopefully that's all the cases, otherwise both the reds were stolen
