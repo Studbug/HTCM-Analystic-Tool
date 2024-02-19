@@ -12,8 +12,9 @@ def main():
         
         print('\n', file.name)
 
-        #Build a library with the time the reds occured as a key, and a list of players who baited them
+        #Build a library with the time the reds and spreads occured as a key, and a list of players who baited them
         redBaits = {}
+        spreadBaits = {}
         for mechanics in data['mechanics']:
             if mechanics['name'] == 'Red.B':
                 for actor in mechanics['mechanicsData']:
@@ -21,7 +22,14 @@ def main():
                         redBaits[actor['time']].append(actor['actor'])
                     else:
                         redBaits[actor['time']] = [actor['actor']]  
+            elif mechanics['name'] == 'Spread.B':
+                for actor in mechanics['mechanicsData']:
+                    if actor['time'] in spreadBaits:
+                        spreadBaits[actor['time']].append(actor['actor'])
+                    else:
+                        spreadBaits[actor['time']] = [actor['actor']]              
 
+        print("Red Baits:")
         for time in redBaits.keys():
             ellieDied = ellieDead(data, time)
             covertDied = covertDead(data, time)
@@ -53,6 +61,19 @@ def main():
             #Hopefully that's all the cases, otherwise both the reds were stolen
             else:
                 print(redBaits[time][0], 'and', redBaits[time][1], 'both reds stolen at', time/1000, 'seconds.')
+
+        spreadBaiters = ['Silas Alder', 'Covertpz', 'Ragnaa Rock', 'Lexi Mora', 'Talan Revenant', 'Nyomedes']
+        print("Spread Baits:")
+        if bool(spreadBaits):
+            for time in spreadBaits.keys():
+                print(spreadBaits[time], 'at', time/1000, 'seconds.', end = ' ')
+                print("Outliers:", end = ' ')
+                for player in spreadBaits[time]:
+                    if not player in spreadBaiters:
+                        print(player)
+        else:
+            print('No spreads')
+        print()
 
     time_stop = process_time()
 
